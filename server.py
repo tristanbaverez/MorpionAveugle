@@ -2,7 +2,7 @@ from grid import *
 import socket
 import select
 hote = ''
-port = 12800
+port = 12800 #valeur par défaut
 
 connexion_principale = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 connexion_principale.bind((hote, port))
