@@ -24,7 +24,9 @@ def initialisationClient():
   else:
     hote=h
     port=p
-  
+    
+initialisationClient();  
+
 shot = b""
 
 while shot != b"fin":
