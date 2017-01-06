@@ -1,7 +1,7 @@
 from grid import *
 import socket
 import select
-hote = ''
+hote = 'localhost'
 port = 12800 #valeur par défaut
 
 def connexion():
@@ -13,7 +13,6 @@ def connexion():
 
 def initialisationServeur():
   print("## Mise en réseau - Serveur")
-	hote = '192.168.42.11'
 	try:
 		p = input("#Choix du port : (valeur entre 49152 et 65535\n")
 		p = int(p)
