@@ -22,8 +22,8 @@ def connexion(port, hote):
       shot = shot.encode()
       # On envoie le message
       connexion_avec_serveur.send(shot)
-    print("Fermeture de la connexion")
-    connexion_avec_serveur.close()
+  print("Fermeture de la connexion")
+  connexion_avec_serveur.close()
 
 
 def initialisationClient():

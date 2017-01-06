@@ -4,7 +4,7 @@ from grid import *
 import socket
 import select
 
-hote = '127.0.1.1'
+hote = ""
 
 def connexion(port):
   connexion_principale = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
