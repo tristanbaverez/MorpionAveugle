@@ -11,12 +11,12 @@ def connexion(port):
   connexion_avec_serveur.connect((hote, port))
   print("Connexion établie avec le serveur sur le port {}".format(port))
   
-  shot = b""
-  while shot != b"fin":
+  shot = ""
+  while shot != "fin":
     signal = connexion_avec_serveur.recv(1024)
     signal = signal.decode()
     print(signal)
-    if signal == "yourshot":
+    if signal == b"yourshot":
       shot = input("> ")
   # Peut planter si vous tapez des caractères spéciaux
       shot = shot.encode()
