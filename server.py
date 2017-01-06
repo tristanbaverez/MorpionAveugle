@@ -26,7 +26,7 @@ def initialisationServeur():
 	except NameError:
 		print("### ERREUR -> Saisie invalide, veuillez relancer une demande de serveur")
 	else: #Si on arrive là tous les paramètres ont été saisie correctement
-		PORT = p
+		port = p
 		res= connexion()
 		print("Serveur initialisé avec succès.")
 		return True
