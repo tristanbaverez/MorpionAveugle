@@ -4,15 +4,38 @@ import select
 hote = ''
 port = 12800 #valeur par défaut
 
-connexion_principale = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-connexion_principale.bind((hote, port))
-connexion_principale.listen(5)
-print("Le serveur écoute à présent sur le port {}".format(port))
+def connexion():
+  connexion_principale = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+  connexion_principale.bind((hote, port))
+  connexion_principale.listen(5)
+  print("Le serveur écoute à présent sur le port {}".format(port))
+  return True
 
-serveur_lance = True
+def initialisationServeur():
+  print("## Mise en réseau - Serveur")
+	hote = '192.168.42.11'
+	try:
+		p = input("#Choix du port : (valeur entre 49152 et 65535\n")
+		p = int(p)
+		if (p < 49152) or (p > 65535):
+			raise ValueError("Attention, domaine de port incorrect")
+	except ValueError:
+		print("Respecter l'ensemble de valeur svp")
+	except TypeError:
+		print("Type incompatible")
+	except NameError:
+		print("### ERREUR -> Saisie invalide, veuillez relancer une demande de serveur")
+	else: #Si on arrive là tous les paramètres ont été saisie correctement
+		PORT = p
+		res= connexion()
+		print("Serveur initialisé avec succès.")
+		return True
+
+serveur_lance = initialisationServeur()
 partie_lance = False
 clients_connectes = []
 current_player = J1
+
 while serveur_lance:
     # On vérifie que de nouveaux clients ne demandent pas à se connecter
     connexions_demandees, wlist, xlist = select.select([connexion_principale],
