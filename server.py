@@ -1,11 +1,12 @@
 # -*-coding:utf-8 -*
+
 from grid import *
 import socket
 import select
 hote = 'localhost'
-port = 12800 #valeur par défaut
 
-def connexion():
+
+def connexion(port):
   connexion_principale = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
   connexion_principale.bind((hote, port))
   connexion_principale.listen(5)
@@ -70,9 +71,10 @@ def initialisationServeur():
   except NameError:
     print("### ERREUR -> Saisie invalide, veuillez relancer une demande de serveur")
   else: #Si on arrive là tous les paramètres ont été saisie correctement
-    port = p
+    port=p
     print("Serveur initialisé avec succès.")
-    res= connexion()   
+    print("Hostname -> ", socket.gethostname())
+    res= connexion(port)   
     return True
 
 initialisationServeur()
