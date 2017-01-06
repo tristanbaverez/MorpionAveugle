@@ -11,17 +11,36 @@ def connexion(port, hote):
   connexion_avec_serveur.connect((hote, port))
   print("Connexion établie avec le serveur sur le port {}".format(port))
 
+  gridsC = [grid(), grid()] # grille du J1 et du J2 pour l'affichage côté client
   shot = ""
-  while shot != "fin":
+  while (shot != "fin") or (signal != b"w1") or (signal != b"w2") or (signal != b"l1") or (signal != b"l2") or (signal != b"draw"):
     signal = connexion_avec_serveur.recv(1024)
     signal = signal.decode()
     print(signal)
     if signal == b"yourshot":
-      shot = input("> ")
+      print("Entrez la coup souhaité")
+      shot =input("> ")
       # Peut planter si vous tapez des caractères spéciaux
       shot = shot.encode()
       # On envoie le message
       connexion_avec_serveur.send(shot)
+    elif signal== b"ok1": #coup valide J1
+      gridsC[0].play(J1,int(shot))
+      gridsC[0].display()
+    elif signal == b"ok2": #coup valide J2
+      gridsC[1].play(J2,int(shot))
+      gridsC[1].display()
+  if signal == b"w1":
+    print("Joueur1 vous avez gagné!")
+  elif signal == b"l1":
+    prinf("Joueur1 vous avez perdu!")
+  elif signal == b"w2":
+    prinf("Joueur2 vous avez gagné!")
+  elif signal == b"l2":
+    prinf("Joueur2 vous avez perdu!")
+  elif signal == b"draw":
+    print("Match NUL !")
+
   print("Fermeture de la connexion")
   connexion_avec_serveur.close()
 
