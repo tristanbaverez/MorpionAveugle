@@ -19,9 +19,8 @@ def connexion(port):
 
   while serveur_lance:
     # On vérifie que de nouveaux clients ne demandent pas à se connecter
-    connexions_demandees, wlist, xlist = select.select([connexion_principale],
-	      [], [], 0.05)
-	  
+    connexions_demandees, wlist, xlist = select.select([connexion_principale],[], [], 0.05)
+
     for connexion in connexions_demandees:
       connexion_avec_client, infos_connexion = connexion.accept()
       # On ajoute le socket connecté à la liste des clients
@@ -32,13 +31,13 @@ def connexion(port):
       CJ1 = clients_connectes[0]
       CJ2 = clients_connectes[1]
       partie_lance = True
-	  
+
     if partie_lance :
       if current_player == J1: #Si c'est le tour de J1
         CJ1.send(b"yourshot")
         signal = CJ1.recv(1024)
         signal = signal.decode()
-        print(signal)		  
+        print(signal)
       else :#Si c'est le tour de J2
         CJ2.send(b"yourshot")
         signal = CJ2.recv(1024)

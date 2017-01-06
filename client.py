@@ -10,7 +10,7 @@ def connexion(port):
   connexion_avec_serveur = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
   connexion_avec_serveur.connect((hote, port))
   print("Connexion établie avec le serveur sur le port {}".format(port))
-  
+
   shot = ""
   while shot != "fin":
     signal = connexion_avec_serveur.recv(1024)
@@ -18,10 +18,10 @@ def connexion(port):
     print(signal)
     if signal == b"yourshot":
       shot = input("> ")
-  # Peut planter si vous tapez des caractères spéciaux
+      # Peut planter si vous tapez des caractères spéciaux
       shot = shot.encode()
-  # On envoie le message
-    connexion_avec_serveur.send(shot)
+      # On envoie le message
+      connexion_avec_serveur.send(shot)
     print("Fermeture de la connexion")
     connexion_avec_serveur.close()
 
@@ -42,5 +42,5 @@ def initialisationClient():
     #on suppose que le hostname est entré correctement
     port=p
     connexion(p)
-    
-initialisationClient();  
+
+initialisationClient();
