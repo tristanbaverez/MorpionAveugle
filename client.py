@@ -34,15 +34,15 @@ initialisationClient();
 def intercation():
   shot = b""
   while shot != b"fin":
-  signal = connexion_avec_serveur.recv(1024)
-  signal = signal.decode()
-  print(signal)
-  if signal == "yourshot":
-    shot = input("> ")
-  # Peut planter si vous tapez des caractères spéciaux
-    shot = shot.encode()
-  # On envoie le message
-  connexion_avec_serveur.send(shot)
+    signal = connexion_avec_serveur.recv(1024)
+    signal = signal.decode()
+    print(signal)
+    if signal == "yourshot":
+      shot = input("> ")
+      # Peut planter si vous tapez des caractères spéciaux
+      shot = shot.encode()
+      # On envoie le message
+      connexion_avec_serveur.send(shot)
   print("Fermeture de la connexion")
   connexion_avec_serveur.close()
 
