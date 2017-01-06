@@ -3,8 +3,8 @@
 from grid import *
 import socket
 import select
-hote = 'localhost'
 
+hote = 'localhost'
 
 def connexion(port):
   connexion_principale = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -32,27 +32,23 @@ def connexion(port):
       CJ1 = clients_connectes[0]
       CJ2 = clients_connectes[1]
       partie_lance = True
-
 	  
     if partie_lance :
       if current_player == J1: #Si c'est le tour de J1
-	CJ1.send(b"yourshot")
-	signal = CJ1.recv(1024)
-	signal = signal.decode()
-	print(signal)
-		  
-		  
-      else : #Si c'est le tour de J2
-	CJ2.send(b"yourshot")
-	signal = CJ2.recv(1024)
-	signal = signal.decode()
-	print(signal)
-		  
+        CJ1.send(b"yourshot")
+        signal = CJ1.recv(1024)
+        signal = signal.decode()
+        print(signal)		  
+      else :#Si c'est le tour de J2
+        CJ2.send(b"yourshot")
+        signal = CJ2.recv(1024)
+        signal = signal.decode()
+        print(signal)      
+      
       current_player = current_player%2+1
-
   print("Fermeture des connexions")
   for client in clients_connectes:
-      client.close()
+    client.close()
   connexion_principale.close()
   serveur_lance=False
 
@@ -75,6 +71,5 @@ def initialisationServeur():
     print("Serveur initialisé avec succès.")
     print("Hostname -> ", socket.gethostname())
     res= connexion(port)   
-    return True
 
 initialisationServeur()
