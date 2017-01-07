@@ -47,19 +47,19 @@ def connexion(port, hote):
       print("##Match NUL !")
     #tests pour les spectateurs 
     elif signal == b"debSpec":
-      print("\n##Bienvenue en mode spectateur")
+      print("\n##Mode spectateur")
     elif signal == b"end1":
       print("Joueur1 a gagné")
     elif signal == b"end2":
       print("Joueur2 a gagné")
-    elif signal[:1] == b"s1" :
-      grille.play(J1,int(signal[2:]))
+    elif int(signal) < 20 :
+      grille.play(J1,int(signal)-10)
       grille.display()
-      print("J1 -> "+signal[2:])
-    elif signal[:1] == b"s2":
-      grille.play(J2,int(signal[2:]))
+      print("J1 -> "+str(int(signal)-10))
+    elif int(signal) >= 20:
+      grille.play(J2,int(signal)-20)
       grille.display()
-      print("J2 -> "+signal[2:])
+      print("J2 -> "+str(int(signal)-20))
   print("Fermeture de la connexion")
   connexion_avec_serveur.close()
 

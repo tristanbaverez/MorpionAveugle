@@ -27,17 +27,16 @@ def connexion(port):
       # On ajoute le socket connecté à la liste des clients
       clients_connectes.append(connexion_avec_client)
       
-      for client in spectateurs:
-        client.send(b"debSpec")
    
       #Les deux premiers clients sont les joueurs 1 et 2 et si il y'en a d'autres ils seront spectateurs
     if len(clients_connectes)>=2 and not(partie_lance):
       CJ1 = clients_connectes[0]
       CJ2 = clients_connectes[1]
       if (len(clients_connectes)- len(spectateurs)) != 2:
-        for s in clients_connectes[len(clients_connectes)- len(spectateurs)-1:]:
+        for s in clients_connectes[len(clients_connectes)-1:]:
           spectateurs.append(s)
-          print("JIJI")
+        for client in spectateurs:
+              client.send(b"debSpec")   
       if (lancementPartie()):
         partie_lance = True
 
@@ -48,29 +47,28 @@ def connexion(port):
       grids = [grid(), grid(), grid()]  
       occupe =False 
       debut=True
-      while grids[0].gameOver() == -1: #tant que la partie n'est pas terminée  
+      while grids[0].gameOver() == -1: #tant que la partie n'est pas terminée
+          #dans le cas c'est le cas on les rajoute a notre tableau de spectateurs 
         if (not(occupe) and not(debut)):
           current_player = current_player%2+1
           print("OKOK")
           #on vérifie régulièrement apres un coup si il y'a eu une tentative de connexion
-          for connexion in connexions_demandees:
-            connexion_avec_client, infos_connexion = connexion.accept()
-            # On ajoute le socket connecté à la liste des clients
-            clients_connectes.append(connexion_avec_client)
-            #dans le cas c'est le cas on les rajoute a notre tableau de spectateurs
-          if (len(clients_connectes)- len(spectateurs)) != 2:
-            print("LALA")
-            for s in clients_connectes[len(clients_connectes)- len(spectateurs)-1:]:
+          #connexion_avec_client, infos_connexion = connexion.accept()
+          # On ajoute le socket connecté à la liste des clients
+          #clients_connectes.append(connexion_avec_client)
+          print("LALA")
+          if (len(clients_connectes)- len(spectateurs)) != 2: 
+            for s in clients_connectes[len(clients_connectes)-1:]:
               spectateurs.append(s)
+            for client in spectateurs:
+              client.send(b"debSpec") #on envoie ce signal afin que le spectateur soit averti que la partie a commencé et qu'il est en mode spec
         else:
           occupe=False
         shot= -1
         print("Nombre de spectateurs : ",len(spectateurs))
         if current_player == J1: #Si c'est le tour de J1 
           if debut:
-            CJ1.send(b"deb")
-            for client in spectateurs:
-              client.send(b"debSpec") #on envoie ce signal afin que le spectateur soit averti que la partie a commencé et qu'il est en mode spec
+            CJ1.send(b"deb")            
           else:      
             CJ1.send(b"yourshot")
           signal = CJ1.recv(1024)
@@ -112,11 +110,12 @@ def connexion(port):
           if current_player==J1:
             CJ1.send(b"ok1")
             for client in spectateurs:
-              client.send(b"s1"+str(shot))
+              client.send(b"1"+str(shot))
           elif current_player==J2:
             CJ2.send(b"ok2")
             for client in spectateurs:
-              client.send(b"s2"+str(shot))          
+              print("OKsss")
+              client.send(b"2"+str(shot))          
         grids[0].display()
         debut=False
       if grids[0].gameOver() == J1:
